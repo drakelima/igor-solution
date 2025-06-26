@@ -1,8 +1,5 @@
-// frontend/src/state/DataContext.js
-
 import React, { createContext, useCallback, useContext, useState } from 'react';
 
-// Ajuste aqui se seu backend estiver em outro host/porta
 const API_BASE = 'http://localhost:3001';
 
 const DataContext = createContext();
@@ -12,7 +9,6 @@ export function DataProvider({ children }) {
 
   const fetchItems = useCallback(
     async ({ page = 1, pageSize = 20, q = '' } = {}, signal) => {
-      // Monta os parâmetros
       const params = new URLSearchParams();
       params.set('limit', pageSize);
       params.set('offset', (page - 1) * pageSize);

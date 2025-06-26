@@ -36,10 +36,8 @@ function createApp() {
 }
 
 beforeEach(() => {
-  // Reset mocks
   fsp.readFile.mockReset();
   fsp.writeFile.mockReset();
-  // Mock initial readFile for stats and items
   fsp.readFile.mockResolvedValue(JSON.stringify(mockItems));
 });
 
@@ -95,7 +93,6 @@ describe('Items API', () => {
 
     expect(res.status).toBe(201);
     expect(res.body).toEqual({ id: mockTime, ...newItem });
-    // Ensure writeFile was called with updated data
     expect(fsp.writeFile).toHaveBeenCalledWith(
       expect.any(String),
       JSON.stringify([...mockItems, { id: mockTime, ...newItem }], null, 2),

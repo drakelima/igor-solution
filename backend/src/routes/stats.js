@@ -7,7 +7,6 @@ const DATA_PATH = path.join(__dirname, '../../../data/items.json');
 
 let cachedStats = null;
 
-// Função que lê o arquivo e calcula os stats
 async function loadStats() {
   const raw = await fsp.readFile(DATA_PATH, 'utf8');
   const items = JSON.parse(raw);
@@ -19,7 +18,6 @@ async function loadStats() {
   cachedStats = { total, averagePrice };
 }
 
-// Fica de olho em mudanças no arquivo para invalidar o cache
 fs.watch(DATA_PATH, (eventType) => {
   if (eventType === 'change') {
     loadStats();
@@ -30,7 +28,6 @@ fs.watch(DATA_PATH, (eventType) => {
 router.get('/', async (req, res, next) => {
   try {
     if (!cachedStats) {
-      // no primeiro acesso, carrega os stats
       await loadStats();
     }
     return res.json(cachedStats);
